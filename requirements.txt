@@ -1,0 +1,6 @@
+gradio==6.31.0
+sentence-transformers==6.2.0
+rank-bm25
+numpy==2.4.6
+openai==3.19.2
+huggingface-hub
