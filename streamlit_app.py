@@ -1,3 +1,4 @@
+import re
 import streamlit as st
 from rag_chain import answer
 
@@ -8,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Targeted CSS Styling (Prevents breaking Streamlit UI icon fonts)
+# Targeted CSS Styling
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -131,6 +132,11 @@ if "messages" not in st.session_state:
         }
     ]
 
+# Helper function to sanitize snippet headers
+def clean_text_snippet(raw_text):
+    clean = re.sub(r'^#+\s*', '', raw_text.strip())
+    return clean
+
 # Render Chat Feed
 for msg in st.session_state.messages:
     avatar_icon = "🌊" if msg["role"] == "assistant" else "👤"
@@ -144,10 +150,10 @@ for msg in st.session_state.messages:
                     source_file = chunk.get("source", "Unknown")
                     chunk_id = chunk.get("chunk_id", "N/A")
                     score_fmt = f"{score:.4f}"
-                    snippet = chunk.get("text", "").strip()
+                    snippet = clean_text_snippet(chunk.get("text", ""))
                     
                     st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `RRF Score: {score_fmt}`")
-                    st.info(snippet)
+                    st.code(snippet, language=None, wrap_lines=True)
 
 # Quick Questions
 prompt_to_process = None
@@ -183,10 +189,10 @@ if prompt_to_process:
                         source_file = chunk.get("source", "Unknown")
                         chunk_id = chunk.get("chunk_id", "N/A")
                         score_fmt = f"{score:.4f}"
-                        snippet = chunk.get("text", "").strip()
+                        snippet = clean_text_snippet(chunk.get("text", ""))
                         
                         st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `RRF Score: {score_fmt}`")
-                        st.info(snippet)
+                        st.code(snippet, language=None, wrap_lines=True)
 
             st.session_state.messages.append({"role": "assistant", "content": reply, "hits": hits})
-            st.rerun() 
+            st.rerun()
