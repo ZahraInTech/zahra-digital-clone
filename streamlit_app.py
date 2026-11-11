@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Pastel Coastal Aesthetic + PowerPoint-Style Morph & Wave Animation CSS
+# Deep Coastal Ocean Palette + Expanded Animated Wave SVG CSS
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -18,77 +18,58 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* Fixed Top-Right Triangular Pastel Wave Graphic */
+    /* Expanded Top-Right Coastal Wave (Organic Tide Motion) */
     .top-right-wave-container {
         position: fixed;
         top: 0;
         right: 0;
-        width: 340px;
-        height: 340px;
+        width: 540px;
+        height: 540px;
         pointer-events: none;
         z-index: 99999;
         overflow: hidden;
     }
 
-    .pastel-wave-svg {
+    .coastal-wave-svg {
         width: 100%;
         height: 100%;
-        filter: drop-shadow(0px 10px 20px rgba(13, 148, 136, 0.15));
-        animation: waveMorph 8s ease-in-out infinite alternate;
+        filter: drop-shadow(-12px 18px 35px rgba(13, 148, 136, 0.22));
+        transform-origin: top right;
+        animation: seaTideFlow 11s ease-in-out infinite alternate;
     }
 
-    /* Keyframe Morph Effect for Geometric Side Wave */
-    @keyframes waveMorph {
+    /* Organic Ocean Tide Animation */
+    @keyframes seaTideFlow {
         0% {
-            transform: translateY(0px) rotate(0deg) scale(1);
+            transform: scale(1) rotate(0deg) translateY(0px);
         }
         50% {
-            transform: translateY(-8px) rotate(1.5deg) scale(1.02);
+            transform: scale(1.05) rotate(-2deg) translateY(-14px);
         }
         100% {
-            transform: translateY(4px) rotate(-1deg) scale(0.99);
+            transform: scale(0.98) rotate(1.5deg) translateY(10px);
         }
     }
 
-    /* Sleek Floating Header Title */
+    /* Clean Standalone Header (No Oval Badge) */
     .brand-title-wrap {
         display: flex;
         align-items: center;
-        gap: 12px;
         margin-top: 10px;
-        margin-bottom: 18px;
+        margin-bottom: 22px;
     }
 
     .brand-title {
-        font-size: 2.2rem;
+        font-size: 2.6rem;
         font-weight: 800;
-        letter-spacing: -0.6px;
-        background: linear-gradient(135deg, #0f172a 0%, #0d9488 50%, #3b82f6 100%);
+        letter-spacing: -0.8px;
+        background: linear-gradient(135deg, #0f2b3c 0%, #0d9488 45%, #0284c7 80%, #38bdf8 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin: 0;
     }
 
-    .brand-pill {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 14px;
-        background: linear-gradient(135deg, #e0f2fe 0%, #ccfbf1 100%);
-        color: #0f766e;
-        border: 1.5px solid #99f6e4;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        box-shadow: 0 4px 14px rgba(153, 246, 228, 0.4);
-        animation: floatPill 3.5s ease-in-out infinite alternate;
-    }
-
-    @keyframes floatPill {
-        0% { transform: translateY(0px); }
-        100% { transform: translateY(-4px); }
-    }
-
-    /* Sidebar Glassmorphic Styling */
+    /* Sidebar Glassmorphic Coastal Styling */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #f8fafc 0%, #f0fdfa 100%);
         border-right: 1px solid #ccfbf1;
@@ -104,7 +85,7 @@ st.markdown("""
     }
 
     .sidebar-card {
-        background: rgba(255, 255, 255, 0.85);
+        background: rgba(255, 255, 255, 0.88);
         backdrop-filter: blur(12px);
         border: 1.5px solid #ccfbf1;
         border-left: 4px solid #0d9488;
@@ -119,11 +100,11 @@ st.markdown("""
     .sidebar-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 24px rgba(13, 148, 136, 0.12);
-        border-left-color: #3b82f6;
+        border-left-color: #0284c7;
     }
 
     .sidebar-card h4 {
-        color: #0f172a;
+        color: #0f2b3c;
         font-size: 1.02rem;
         font-weight: 700;
         margin: 0 0 6px 0;
@@ -144,7 +125,7 @@ st.markdown("""
         line-height: 1.6;
     }
 
-    /* Interactive "Morphing" Quick Prompt Chips */
+    /* Morphing Quick Prompt Chips */
     div.stButton > button[kind="secondary"] {
         background: #ffffff !important;
         color: #0f766e !important;
@@ -158,31 +139,46 @@ st.markdown("""
     }
 
     div.stButton > button[kind="secondary"]:hover {
-        background: linear-gradient(135deg, #e0f2fe 0%, #ccfbf1 100%) !important;
-        border-color: #3b82f6 !important;
-        color: #1e3a8a !important;
-        border-radius: 8px 18px 8px 18px !important; /* Shape Morphing on Hover */
+        background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%) !important;
+        border-color: #0284c7 !important;
+        color: #0369a1 !important;
+        border-radius: 8px 18px 8px 18px !important;
         transform: translateY(-3px) scale(1.02) !important;
-        box-shadow: 0 8px 22px rgba(59, 130, 246, 0.25) !important;
+        box-shadow: 0 8px 22px rgba(2, 132, 199, 0.2) !important;
     }
     </style>
 
-    <!-- Top-Right Geometric Triangular Pastel Wave overlay -->
+    <!-- Expanded Rich Coastal Wave SVG Overlay -->
     <div class="top-right-wave-container">
-        <svg class="pastel-wave-svg" viewBox="0 0 350 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="coastal-wave-svg" viewBox="0 0 540 540" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <linearGradient id="pastelGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#99f6e4" stop-opacity="0.85"/>
-                    <stop offset="50%" stop-color="#bae6fd" stop-opacity="0.9"/>
-                    <stop offset="100%" stop-color="#ddd6fe" stop-opacity="0.8"/>
+                <!-- Outer Mist Layer -->
+                <linearGradient id="crestGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ccfbf1" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.65"/>
                 </linearGradient>
-                <linearGradient id="pastelGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
-                    <stop offset="100%" stop-color="#a7f3d0" stop-opacity="0.4"/>
+
+                <!-- Middle Coastal Aqua Layer -->
+                <linearGradient id="coastalAquaGrad" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.75"/>
+                    <stop offset="55%" stop-color="#99f6e4" stop-opacity="0.85"/>
+                    <stop offset="100%" stop-color="#e0f2fe" stop-opacity="0.6"/>
+                </linearGradient>
+
+                <!-- Deep Sea Ocean Core Layer -->
+                <linearGradient id="deepSeaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0f2b3c" stop-opacity="0.9"/>
+                    <stop offset="45%" stop-color="#0d9488" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#0284c7" stop-opacity="0.7"/>
                 </linearGradient>
             </defs>
-            <path d="M350,0 L120,0 C170,90 220,130 190,210 C160,290 280,310 350,350 Z" fill="url(#pastelGrad2)" />
-            <path d="M350,0 L160,0 C220,70 260,110 230,170 C200,230 300,260 350,300 Z" fill="url(#pastelGrad1)" />
+
+            <!-- Layer 1: Outer Foam Crest -->
+            <path d="M540,0 L130,0 C210,140 320,190 240,340 C160,490 390,490 540,540 Z" fill="url(#crestGrad)" />
+            <!-- Layer 2: Mid-Tide Aqua -->
+            <path d="M540,0 L190,0 C270,120 360,160 290,290 C220,420 440,430 540,490 Z" fill="url(#coastalAquaGrad)" />
+            <!-- Layer 3: Deep Sea Core -->
+            <path d="M540,0 L260,0 C340,95 410,130 350,230 C290,330 470,360 540,420 Z" fill="url(#deepSeaGrad)" />
         </svg>
     </div>
 """, unsafe_allow_html=True)
@@ -216,11 +212,10 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# Minimal Floating Title Header
+# Standalone Name Header (No Oval Badge)
 st.markdown("""
     <div class="brand-title-wrap">
         <h1 class="brand-title">Zahra Mumtaz</h1>
-        <span class="brand-pill">✨ Digital AI Clone</span>
     </div>
 """, unsafe_allow_html=True)
 
@@ -254,7 +249,7 @@ for msg in st.session_state.messages:
                     st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
                     st.code(snippet, language=None, wrap_lines=True)
 
-# Morphing Interactive Sample Prompt Cards
+# Morphing Sample Prompt Cards
 prompt_to_process = None
 if len(st.session_state.messages) <= 1:
     st.markdown("<p style='font-weight:600; color:#0f766e; margin-bottom: 12px;'>Suggested Questions:</p>", unsafe_allow_html=True)
