@@ -18,30 +18,30 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* Guaranteed Visible Coastal Splash on Streamlit's Root Container */
+    /* Soft Coastal Gradient on Streamlit Root Background */
     [data-testid="stAppViewContainer"] {
         background: 
-            radial-gradient(circle at 98% 2%, rgba(56, 189, 248, 0.35) 0%, rgba(13, 148, 136, 0.28) 25%, rgba(15, 43, 60, 0.12) 50%, transparent 75%),
-            radial-gradient(circle at 85% 15%, rgba(153, 246, 228, 0.4) 0%, transparent 40%),
+            radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.28) 0%, rgba(13, 148, 136, 0.22) 25%, rgba(15, 43, 60, 0.08) 50%, transparent 70%),
+            radial-gradient(circle at 85% 15%, rgba(153, 246, 228, 0.3) 0%, transparent 40%),
             #ffffff !important;
     }
 
-    /* Top-Right Floating Animated Ocean Wave Artwork */
+    /* Fixed Top-Right Viewport Wave (Pinned strictly to browser window edge) */
     .top-right-wave-box {
-        position: absolute;
-        top: 0px;
-        right: 0px;
-        width: 480px;
-        height: 320px;
+        position: fixed !important;
+        top: 0px !important;
+        right: 0px !important;
+        width: 440px;
+        height: 360px;
         pointer-events: none;
-        z-index: 10;
-        overflow: visible;
+        z-index: 9999;
+        overflow: hidden;
     }
 
     .coastal-wave-svg {
         width: 100%;
         height: 100%;
-        filter: drop-shadow(-10px 14px 28px rgba(13, 148, 136, 0.25));
+        filter: drop-shadow(-8px 12px 24px rgba(13, 148, 136, 0.18));
         transform-origin: top right;
         animation: seaTideFlow 9s ease-in-out infinite alternate;
     }
@@ -51,10 +51,10 @@ st.markdown("""
             transform: scale(1) rotate(0deg) translateY(0px);
         }
         50% {
-            transform: scale(1.06) rotate(-2.5deg) translateY(-10px);
+            transform: scale(1.05) rotate(-2deg) translateY(-8px);
         }
         100% {
-            transform: scale(0.97) rotate(1.8deg) translateY(8px);
+            transform: scale(0.98) rotate(1.5deg) translateY(6px);
         }
     }
 
@@ -148,26 +148,26 @@ st.markdown("""
     }
     </style>
 
-    <!-- Floating Top-Right Animated Wave Artwork -->
+    <!-- Fixed Top-Right Viewport Animated Wave Graphic -->
     <div class="top-right-wave-box">
-        <svg class="coastal-wave-svg" viewBox="0 0 480 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="coastal-wave-svg" viewBox="0 0 440 360" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="foamGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#99f6e4" stop-opacity="0.6"/>
-                    <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.75"/>
+                    <stop offset="0%" stop-color="#99f6e4" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.7"/>
                 </linearGradient>
                 <linearGradient id="midAquaGrad" x1="100%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#0284c7" stop-opacity="0.8"/>
-                    <stop offset="100%" stop-color="#0d9488" stop-opacity="0.85"/>
+                    <stop offset="0%" stop-color="#0284c7" stop-opacity="0.75"/>
+                    <stop offset="100%" stop-color="#0d9488" stop-opacity="0.8"/>
                 </linearGradient>
                 <linearGradient id="deepNavyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#0f2b3c" stop-opacity="0.95"/>
-                    <stop offset="100%" stop-color="#0f766e" stop-opacity="0.85"/>
+                    <stop offset="0%" stop-color="#0f2b3c" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#0f766e" stop-opacity="0.8"/>
                 </linearGradient>
             </defs>
-            <path d="M480,0 L80,0 C160,90 280,120 200,220 C120,320 340,300 480,320 Z" fill="url(#foamGrad)" />
-            <path d="M480,0 L140,0 C210,80 310,100 240,180 C170,260 380,270 480,290 Z" fill="url(#midAquaGrad)" />
-            <path d="M480,0 L210,0 C270,60 350,80 300,140 C250,200 420,220 480,240 Z" fill="url(#deepNavyGrad)" />
+            <path d="M440,0 L60,0 C140,80 250,110 170,210 C90,310 300,310 440,360 Z" fill="url(#foamGrad)" />
+            <path d="M440,0 L120,0 C180,70 270,90 210,170 C150,250 340,260 440,310 Z" fill="url(#midAquaGrad)" />
+            <path d="M440,0 L180,0 C240,55 310,70 270,130 C220,190 370,210 440,260 Z" fill="url(#deepNavyGrad)" />
         </svg>
     </div>
 """, unsafe_allow_html=True)
