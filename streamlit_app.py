@@ -8,9 +8,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom SVG Circle Avatars
-AVATAR_ASSISTANT = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%230f766e'/><path d='M10 20c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round'/><path d='M10 25c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='1.5' stroke-opacity='0.6' fill='none' stroke-linecap='round'/></svg>"
-AVATAR_USER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%232dd4bf'/><path d='M20 18a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 3c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z' fill='white'/></svg>"
+# Bespoke Glass-Ring SVG Vector Avatars (Delicate thin-stroke design)
+AVATAR_ASSISTANT = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' fill='%23f0fdfa' stroke='%230d9488' stroke-width='1.5'/><path d='M11 18c2.2 0 3.2-1.8 5.5-1.8s3.3 1.8 5.5 1.8 3.3-1.8 5.5-1.8' stroke='%230f766e' stroke-width='2' fill='none' stroke-linecap='round'/><path d='M11 23c2.2 0 3.2-1.8 5.5-1.8s3.3 1.8 5.5 1.8 3.3-1.8 5.5-1.8' stroke='%230d9488' stroke-width='1.5' stroke-opacity='0.75' fill='none' stroke-linecap='round'/></svg>"
+AVATAR_USER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' fill='%23f0f9ff' stroke='%230284c7' stroke-width='1.5'/><path d='M20 17.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm0 2.5c-3.8 0-7 1.8-7 4v1h14v-1c0-2.2-3.2-4-7-4z' fill='%230284c7'/></svg>"
 
 # CSS for Full-Height Sea Backdrop, Cohesive Header, and Single-Capsule Input Bar
 st.markdown("""
@@ -115,11 +115,12 @@ st.markdown("""
         box-shadow: 0 10px 30px -5px rgba(13, 148, 136, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
     }
 
-    /* Chat Avatar Sizing */
+    /* Refined Chat Avatar Sizing & Border Drop Shadow */
     [data-testid="stChatMessage"] img {
-        width: 38px !important;
-        height: 38px !important;
+        width: 40px !important;
+        height: 40px !important;
         border-radius: 50% !important;
+        filter: drop-shadow(0 2px 6px rgba(13, 148, 136, 0.12));
     }
 
     /* RAG Evidence Expander Pill Button */
