@@ -8,8 +8,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Bespoke Glass-Ring SVG Vector Avatars (Delicate thin-stroke design)
-AVATAR_ASSISTANT = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' fill='%23f0fdfa' stroke='%230d9488' stroke-width='1.5'/><path d='M11 18c2.2 0 3.2-1.8 5.5-1.8s3.3 1.8 5.5 1.8 3.3-1.8 5.5-1.8' stroke='%230f766e' stroke-width='2' fill='none' stroke-linecap='round'/><path d='M11 23c2.2 0 3.2-1.8 5.5-1.8s3.3 1.8 5.5 1.8 3.3-1.8 5.5-1.8' stroke='%230d9488' stroke-width='1.5' stroke-opacity='0.75' fill='none' stroke-linecap='round'/></svg>"
+# Bespoke Glass-Ring SVG Vector Avatars (Delicate Heart Motif for Assistant)
+AVATAR_ASSISTANT = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' fill='%23f0fdfa' stroke='%230d9488' stroke-width='1.5'/><path d='M20 27.2l-1.45-1.32C13.4 21.03 10 17.95 10 14.15 10 11.05 12.42 8.63 15.52 8.63c1.74 0 3.41.81 4.48 2.09 1.07-1.28 2.74-2.09 4.48-2.09C27.58 8.63 30 11.05 30 14.15c0 3.8-3.4 6.88-8.55 11.74L20 27.2z' fill='none' stroke='%230d9488' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>"
 AVATAR_USER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' fill='%23f0f9ff' stroke='%230284c7' stroke-width='1.5'/><path d='M20 17.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm0 2.5c-3.8 0-7 1.8-7 4v1h14v-1c0-2.2-3.2-4-7-4z' fill='%230284c7'/></svg>"
 
 # CSS for Full-Height Sea Backdrop, Cohesive Header, and Single-Capsule Input Bar
