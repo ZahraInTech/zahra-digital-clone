@@ -8,11 +8,11 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom SVG Circle Avatars (Matching Coastal Aesthetics)
+# Custom SVG Circle Avatars
 AVATAR_ASSISTANT = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%230f766e'/><path d='M10 20c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round'/><path d='M10 25c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='1.5' stroke-opacity='0.6' fill='none' stroke-linecap='round'/></svg>"
 AVATAR_USER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%232dd4bf'/><path d='M20 18a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 3c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z' fill='white'/></svg>"
 
-# CSS for Exact Target UI Matching
+# CSS for Full-Height Sea Backdrop & Glass UI
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -21,14 +21,19 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* High-Res Coastal Ocean Backdrop with Translucent Blend */
+    /* High-Res Coastal Ocean Backdrop - Full Height Coverage */
     [data-testid="stAppViewContainer"] {
         background: 
-            linear-gradient(180deg, rgba(235, 248, 250, 0.45) 0%, rgba(255, 255, 255, 0.75) 60%, rgba(224, 242, 254, 0.85) 100%),
+            linear-gradient(180deg, rgba(235, 248, 250, 0.45) 0%, rgba(255, 255, 255, 0.65) 50%, rgba(204, 251, 241, 0.75) 100%),
             url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000&auto=format&fit=crop') !important;
         background-size: cover !important;
         background-position: center top !important;
         background-attachment: fixed !important;
+    }
+
+    /* Make Streamlit's Bottom Container Transparent so Sea Shows 100% */
+    [data-testid="stBottom"], footer, header {
+        background: transparent !important;
     }
 
     /* Top-Left Organic Glass Wave Curve */
@@ -56,13 +61,13 @@ st.markdown("""
     /* Target Header Layout */
     .header-container {
         margin-top: 10px;
-        margin-bottom: 28px;
+        margin-bottom: 24px;
         position: relative;
         z-index: 10;
     }
 
     .hello-text {
-        font-size: 2.1rem;
+        font-size: 1.8rem;
         font-weight: 500;
         color: #0d9488;
         margin-bottom: 2px;
@@ -138,7 +143,7 @@ st.markdown("""
         color: #475569 !important;
     }
 
-    /* Rounded Pill Chat Input Bar (Bottom Pinned) */
+    /* Floating Glass Chat Input Bar */
     [data-testid="stChatInput"] {
         background: rgba(255, 255, 255, 0.92) !important;
         backdrop-filter: blur(20px) !important;
@@ -146,6 +151,7 @@ st.markdown("""
         border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
         box-shadow: 0 12px 35px rgba(13, 148, 136, 0.15) !important;
         padding: 4px 12px !important;
+        margin-bottom: 8px !important;
     }
 
     [data-testid="stChatInput"] input {
@@ -259,7 +265,6 @@ def clean_text_snippet(raw_text):
     return re.sub(r'^#+\s*', '', str(raw_text).strip())
 
 def parse_hit_item(item):
-    """Safely extracts (chunk_dict, score) whether item is a tuple, dict, or raw hit."""
     if isinstance(item, tuple) and len(item) > 0:
         chunk_dict = item[0] if isinstance(item[0], dict) else {}
         score = item[1] if len(item) > 1 and isinstance(item[1], (int, float)) else 0.0
@@ -297,34 +302,21 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# Header Layout
+# Greeting Header Greeting Visitors
 st.markdown("""
     <div class="header-container">
-        <div class="hello-text">Hello,</div>
+        <div class="hello-text">Welcome! Meet</div>
         <div class="name-title-wrap">
             <h1 class="name-text">Zahra Mumtaz</h1>
             <span class="heart-icon">&#9825;</span>
         </div>
-        <div class="sub-text">YOUR DIGITAL CLONE &bull; ALWAYS HERE FOR YOU</div>
+        <div class="sub-text">AI DIGITAL CLONE &bull; ALWAYS HERE FOR YOU</div>
     </div>
 """, unsafe_allow_html=True)
 
-# Session State Initialization
+# Session State Initialization (Starts empty)
 if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {
-            "role": "user",
-            "content": "Do you watch any movies?",
-            "hits": []
-        },
-        {
-            "role": "assistant",
-            "content": "I'm not a big movie watcher, but I do love wholesome animated films. My ultimate comfort movie is *Turbo*, which I grew up watching with my siblings, so it always feels like home. I also enjoy classic Disney/Pixar films like the *Toy Story* series, *Tangled*, and *Frozen*.\n\nI am also a huge fan of Studio Ghibli for their incredible storytelling and visual magic. My top favorites from them are *When Marnie Was There*, *The Wind Rises*, and *Howl's Moving Castle*.",
-            "hits": [
-                ({"source": "07_faqs.md", "chunk_id": "12", "text": "Q12: Do you watch any movies? A: I'm not a big movie watcher, but I love wholesome animated films..."}, 0.032)
-            ]
-        }
-    ]
+    st.session_state.messages = []
 
 # Render Chat Feed
 for msg in st.session_state.messages:
@@ -344,9 +336,9 @@ for msg in st.session_state.messages:
                     st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
                     st.code(snippet, language=None, wrap_lines=True)
 
-# Quick Questions Cards
+# Suggested Questions Cards (ONLY render when conversation is brand new/empty!)
 prompt_to_process = None
-if len(st.session_state.messages) <= 2:
+if len(st.session_state.messages) == 0:
     col1, col2, col3 = st.columns(3)
     if col1.button("Tell me about Emora", type="secondary", use_container_width=True):
         prompt_to_process = "Tell me about your final year project Emora."
