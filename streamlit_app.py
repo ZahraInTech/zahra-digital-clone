@@ -8,11 +8,11 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom SVG Icons (Encoded as Data URIs for crisp vector rendering)
-AVATAR_ASSISTANT = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c5a059' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 6c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.5 0 2.5 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1'/><path d='M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1'/><path d='M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1'/></svg>"
-AVATAR_USER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d9488' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg>"
+# Custom SVG Circle Avatars (Matching the image)
+AVATAR_ASSISTANT = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%230f766e'/><path d='M10 20c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round'/><path d='M10 25c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='1.5' stroke-opacity='0.6' fill='none' stroke-linecap='round'/></svg>"
+AVATAR_USER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%232dd4bf'/><path d='M20 18a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 3c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z' fill='white'/></svg>"
 
-# Luxury Emerald, Aquamarine & Sand Gold Palette CSS
+# CSS for Exact Target UI Matching
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -21,68 +21,151 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* Soft Luxury Coastal Canvas Background (Emerald + Aquamarine + Sand Gold Glow) */
+    /* High-Res Coastal Ocean Backdrop with Translucent Blend */
     [data-testid="stAppViewContainer"] {
         background: 
-            radial-gradient(circle at 100% 0%, rgba(197, 160, 89, 0.22) 0%, rgba(94, 234, 212, 0.2) 25%, rgba(13, 148, 136, 0.12) 50%, transparent 75%),
-            radial-gradient(circle at 85% 20%, rgba(203, 213, 225, 0.3) 0%, transparent 45%),
-            #ffffff !important;
+            linear-gradient(180deg, rgba(235, 248, 250, 0.45) 0%, rgba(255, 255, 255, 0.75) 60%, rgba(224, 242, 254, 0.85) 100%),
+            url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000&auto=format&fit=crop') !important;
+        background-size: cover !important;
+        background-position: center top !important;
+        background-attachment: fixed !important;
     }
 
-    /* Fixed Top-Right Viewport Wave Graphic (Emerald Teal & Metallic Sand Gold) */
-    .top-right-wave-box {
+    /* Top-Left Organic Glass Wave Curve */
+    .top-left-glass-wave {
         position: fixed !important;
         top: 0px !important;
-        right: 0px !important;
-        width: 440px;
-        height: 360px;
+        left: 0px !important;
+        width: 380px;
+        height: 280px;
         pointer-events: none;
-        z-index: 9999;
-        overflow: hidden;
+        z-index: 1;
     }
 
-    .coastal-wave-svg {
-        width: 100%;
-        height: 100%;
-        filter: drop-shadow(-8px 12px 24px rgba(197, 160, 89, 0.18));
-        transform-origin: top right;
-        animation: seaTideFlow 10s ease-in-out infinite alternate;
+    /* Bottom-Right Organic Glass Wave Curve */
+    .bottom-right-glass-wave {
+        position: fixed !important;
+        bottom: 0px !important;
+        right: 0px !important;
+        width: 460px;
+        height: 320px;
+        pointer-events: none;
+        z-index: 1;
     }
 
-    @keyframes seaTideFlow {
-        0% {
-            transform: scale(1) rotate(0deg) translateY(0px);
-        }
-        50% {
-            transform: scale(1.04) rotate(-1.8deg) translateY(-8px);
-        }
-        100% {
-            transform: scale(0.98) rotate(1.2deg) translateY(6px);
-        }
-    }
-
-    /* Bespoke Header Gradient (Deep Emerald -> Aquamarine -> Sand Gold) */
-    .brand-title-wrap {
+    /* Target Header Layout */
+    .header-container {
+        margin-top: 10px;
+        margin-bottom: 28px;
         position: relative;
-        z-index: 20;
-        margin-top: 4px;
-        margin-bottom: 22px;
+        z-index: 10;
     }
 
-    .brand-title {
+    .hello-text {
+        font-size: 2.1rem;
+        font-weight: 500;
+        color: #0d9488;
+        margin-bottom: 2px;
+        letter-spacing: -0.3px;
+    }
+
+    .name-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .name-text {
         font-size: 2.7rem;
         font-weight: 800;
-        letter-spacing: -0.8px;
-        background: linear-gradient(135deg, #064e3b 0%, #0d9488 40%, #0284c7 70%, #c5a059 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #0f2b3c;
         margin: 0;
+        letter-spacing: -0.8px;
     }
 
-    /* Glassmorphic Sidebar with Sand Gold Accents */
+    .heart-icon {
+        font-size: 1.8rem;
+        color: #0d9488;
+        font-weight: 400;
+    }
+
+    .sub-text {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+        color: #64748b;
+        margin-top: 6px;
+    }
+
+    /* Glassmorphic Chat Cards */
+    [data-testid="stChatMessage"] {
+        background: rgba(255, 255, 255, 0.88) !important;
+        backdrop-filter: blur(16px) !important;
+        border-radius: 22px !important;
+        padding: 20px 24px !important;
+        margin-bottom: 18px !important;
+        border: 1px solid rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 10px 30px -5px rgba(13, 148, 136, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+    }
+
+    /* Chat Avatar Sizing */
+    [data-testid="stChatMessage"] img {
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 50% !important;
+    }
+
+    /* RAG Evidence Expander Pill Button (Matching ↓ Button in Image) */
+    [data-testid="stExpander"] {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        margin-top: 10px !important;
+    }
+
+    [data-testid="stExpander"] details {
+        border: 1px solid rgba(203, 213, 225, 0.6) !important;
+        border-radius: 20px !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+        padding: 4px 12px !important;
+    }
+
+    [data-testid="stExpander"] summary {
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        color: #475569 !important;
+    }
+
+    /* Rounded Pill Chat Input Bar (Bottom Pinned) */
+    [data-testid="stChatInput"] {
+        background: rgba(255, 255, 255, 0.92) !important;
+        backdrop-filter: blur(20px) !important;
+        border-radius: 40px !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 12px 35px rgba(13, 148, 136, 0.15) !important;
+        padding: 4px 12px !important;
+    }
+
+    [data-testid="stChatInput"] input {
+        color: #0f2b3c !important;
+        font-size: 0.95rem !important;
+    }
+
+    /* Circular Send Button */
+    [data-testid="stChatInput"] button {
+        background: #0f766e !important;
+        color: #ffffff !important;
+        border-radius: 50% !important;
+        border: none !important;
+    }
+
+    /* Sidebar Glassmorphic Styling */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #f8fafc 0%, #f0fdfa 100%);
-        border-right: 1px solid #e2e8f0;
+        background: rgba(248, 250, 252, 0.85) !important;
+        backdrop-filter: blur(16px) !important;
+        border-right: 1px solid rgba(203, 213, 225, 0.5) !important;
     }
 
     .sidebar-section-title {
@@ -98,24 +181,24 @@ st.markdown("""
         background: rgba(255, 255, 255, 0.92);
         backdrop-filter: blur(12px);
         border: 1px solid #e2e8f0;
-        border-left: 4px solid #c5a059; /* Metallic Sand Gold Accent */
+        border-left: 4px solid #0d9488;
         padding: 16px;
         border-radius: 14px;
         margin-top: 10px;
         margin-bottom: 16px;
-        box-shadow: 0 4px 16px rgba(197, 160, 89, 0.08);
+        box-shadow: 0 4px 16px rgba(13, 148, 136, 0.06);
     }
 
     .sidebar-card h4 {
-        color: #064e3b;
-        font-size: 1.02rem;
+        color: #0f2b3c;
+        font-size: 1rem;
         font-weight: 700;
         margin: 0 0 6px 0;
     }
 
     .sidebar-card p {
         color: #475569;
-        font-size: 0.86rem;
+        font-size: 0.85rem;
         line-height: 1.5;
         margin-bottom: 8px;
     }
@@ -124,57 +207,54 @@ st.markdown("""
         margin: 0;
         padding-left: 16px;
         color: #334155;
-        font-size: 0.84rem;
+        font-size: 0.83rem;
         line-height: 1.6;
     }
 
-    /* Luxury Prompt Chips (Sand Gold Border + Hover Transformation) */
+    /* Suggested Question Buttons */
     div.stButton > button[kind="secondary"] {
-        background: #ffffff !important;
+        background: rgba(255, 255, 255, 0.9) !important;
         color: #0f766e !important;
-        border: 1.5px solid #c5a059 !important;
-        border-radius: 14px !important;
+        border: 1.5px solid #99f6e4 !important;
+        border-radius: 20px !important;
         font-size: 0.86rem !important;
         font-weight: 600 !important;
         padding: 10px 18px !important;
-        box-shadow: 0 4px 14px rgba(197, 160, 89, 0.12) !important;
-        transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        box-shadow: 0 4px 14px rgba(13, 148, 136, 0.08) !important;
+        transition: all 0.3s ease-in-out !important;
     }
 
     div.stButton > button[kind="secondary"]:hover {
-        background: linear-gradient(135deg, #fefce8 0%, #f0fdfa 100%) !important;
+        background: #f0fdfa !important;
         border-color: #0d9488 !important;
-        color: #064e3b !important;
-        transform: translateY(-2px) scale(1.01) !important;
-        box-shadow: 0 8px 20px rgba(13, 148, 136, 0.18) !important;
+        transform: translateY(-2px) !important;
     }
     </style>
 
-    <!-- Top-Right Fixed Wave SVG Overlay -->
-    <div class="top-right-wave-box">
-        <svg class="coastal-wave-svg" viewBox="0 0 440 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="sandGoldGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#c5a059" stop-opacity="0.45"/>
-                    <stop offset="100%" stop-color="#5eead4" stop-opacity="0.6"/>
-                </linearGradient>
-                <linearGradient id="aquamarineGrad" x1="100%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#0d9488" stop-opacity="0.75"/>
-                    <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0.8"/>
-                </linearGradient>
-                <linearGradient id="emeraldNavyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#064e3b" stop-opacity="0.9"/>
-                    <stop offset="100%" stop-color="#0f766e" stop-opacity="0.85"/>
-                </linearGradient>
-            </defs>
-            <path d="M440,0 L60,0 C140,80 250,110 170,210 C90,310 300,310 440,360 Z" fill="url(#sandGoldGrad)" />
-            <path d="M440,0 L120,0 C180,70 270,90 210,170 C150,250 340,260 440,310 Z" fill="url(#aquamarineGrad)" />
-            <path d="M440,0 L180,0 C240,55 310,70 270,130 C220,190 370,210 440,260 Z" fill="url(#emeraldNavyGrad)" />
-        </svg>
-    </div>
+    <!-- Top-Left Glass Wave Overlay -->
+    <svg class="top-left-glass-wave" viewBox="0 0 380 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L260,0 C180,80 220,160 140,220 C60,280 0,220 0,280 Z" fill="url(#waveGradTL)" opacity="0.45"/>
+        <defs>
+            <linearGradient id="waveGradTL" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2dd4bf"/>
+                <stop offset="100%" stop-color="#38bdf8"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Bottom-Right Glass Wave Overlay -->
+    <svg class="bottom-right-glass-wave" viewBox="0 0 460 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M460,320 L180,320 C240,240 280,180 360,120 C440,60 460,0 460,0 Z" fill="url(#waveGradBR)" opacity="0.35"/>
+        <defs>
+            <linearGradient id="waveGradBR" x1="100%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#0d9488"/>
+                <stop offset="100%" stop-color="#7dd3fc"/>
+            </linearGradient>
+        </defs>
+    </svg>
 """, unsafe_allow_html=True)
 
-# Compact Glassmorphic Sidebar
+# Compact Sidebar
 with st.sidebar:
     st.markdown("<p class='sidebar-section-title'>Retrieval Engine</p>", unsafe_allow_html=True)
     mode = st.radio(
@@ -203,10 +283,15 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# Clean Title Header
+# Header Matching Mockup Image
 st.markdown("""
-    <div class="brand-title-wrap">
-        <h1 class="brand-title">Zahra Mumtaz</h1>
+    <div class="header-container">
+        <div class="hello-text">Hello,</div>
+        <div class="name-title-wrap">
+            <h1 class="name-text">Zahra Mumtaz</h1>
+            <span class="heart-icon">&#9825;</span>
+        </div>
+        <div class="sub-text">YOUR DIGITAL CLONE &bull; ALWAYS HERE FOR YOU</div>
     </div>
 """, unsafe_allow_html=True)
 
@@ -214,36 +299,41 @@ st.markdown("""
 if "messages" not in st.session_state:
     st.session_state.messages = [
         {
-            "role": "assistant", 
-            "content": "Hello! I am Zahra's AI Digital Clone. Feel free to ask about my final year research project **Emora**, technical software stack, study workflows, or signature baking recipes!",
+            "role": "user",
+            "content": "Do you watch any movies?",
             "hits": []
+        },
+        {
+            "role": "assistant",
+            "content": "I'm not a big movie watcher, but I do love wholesome animated films. My ultimate comfort movie is *Turbo*, which I grew up watching with my siblings, so it always feels like home. I also enjoy classic Disney/Pixar films like the *Toy Story* series, *Tangled*, and *Frozen*.\n\nI am also a huge fan of Studio Ghibli for their incredible storytelling and visual magic. My top favorites from them are *When Marnie Was There*, *The Wind Rises*, and *Howl's Moving Castle*.",
+            "hits": [
+                {"source": "07_faqs.md", "chunk_id": "12", "text": "Q12: Do you watch any movies? A: I'm not a big movie watcher, but I love wholesome animated films..."}
+            ]
         }
     ]
 
 def clean_text_snippet(raw_text):
     return re.sub(r'^#+\s*', '', raw_text.strip())
 
-# Render Chat Feed with Custom Vector SVG Avatars
+# Render Chat Feed
 for msg in st.session_state.messages:
     avatar_icon = AVATAR_ASSISTANT if msg["role"] == "assistant" else AVATAR_USER
     with st.chat_message(msg["role"], avatar=avatar_icon):
         st.markdown(msg["content"])
         
         if msg.get("hits"):
-            with st.expander("View RAG Evidence & Context Chunks", expanded=False):
-                for idx, (chunk, score) in enumerate(msg["hits"], 1):
+            with st.expander("&darr; View RAG Evidence & Context Chunks", expanded=False):
+                for idx, chunk in enumerate(msg["hits"], 1):
                     source_file = chunk.get("source", "Unknown")
                     chunk_id = chunk.get("chunk_id", "N/A")
-                    score_fmt = f"{score:.4f}"
                     snippet = clean_text_snippet(chunk.get("text", ""))
                     
-                    st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
+                    st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}`")
                     st.code(snippet, language=None, wrap_lines=True)
 
-# Sample Prompt Chips
+# Quick Questions Cards
 prompt_to_process = None
-if len(st.session_state.messages) <= 1:
-    st.markdown("<p style='font-weight:600; color:#0f766e; margin-bottom: 12px;'>Suggested Questions:</p>", unsafe_allow_html=True)
+if len(st.session_state.messages) <= 2:
     col1, col2, col3 = st.columns(3)
     if col1.button("Tell me about Emora", type="secondary", use_container_width=True):
         prompt_to_process = "Tell me about your final year project Emora."
@@ -252,7 +342,7 @@ if len(st.session_state.messages) <= 1:
     if col3.button("Signature baking dish?", type="secondary", use_container_width=True):
         prompt_to_process = "What is your signature culinary dish or dessert to bake?"
 
-# Fixed Bottom Input Bar
+# Bottom Pinned Chat Input Bar
 user_input = st.chat_input("Ask Zahra anything...")
 if user_input:
     prompt_to_process = user_input
@@ -271,19 +361,20 @@ if prompt_to_process:
 
     with st.chat_message("assistant", avatar=AVATAR_ASSISTANT):
         with st.spinner("Searching knowledge base..."):
-            reply, hits = answer(prompt_to_process, backend_mode)
+            reply, hits_data = answer(prompt_to_process, backend_mode)
             st.markdown(reply)
 
-            if hits:
-                with st.expander("View RAG Evidence & Context Chunks", expanded=False):
-                    for idx, (chunk, score) in enumerate(hits, 1):
+            hits_list = [h[0] if isinstance(h, tuple) else h for h in hits_data] if hits_data else []
+
+            if hits_list:
+                with st.expander("&darr; View RAG Evidence & Context Chunks", expanded=False):
+                    for idx, chunk in enumerate(hits_list, 1):
                         source_file = chunk.get("source", "Unknown")
                         chunk_id = chunk.get("chunk_id", "N/A")
-                        score_fmt = f"{score:.4f}"
                         snippet = clean_text_snippet(chunk.get("text", ""))
                         
-                        st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
+                        st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}`")
                         st.code(snippet, language=None, wrap_lines=True)
 
-            st.session_state.messages.append({"role": "assistant", "content": reply, "hits": hits})
+            st.session_state.messages.append({"role": "assistant", "content": reply, "hits": hits_list})
             st.rerun()
