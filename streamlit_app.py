@@ -12,7 +12,7 @@ st.set_page_config(
 AVATAR_ASSISTANT = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%230f766e'/><path d='M10 20c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round'/><path d='M10 25c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='1.5' stroke-opacity='0.6' fill='none' stroke-linecap='round'/></svg>"
 AVATAR_USER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%232dd4bf'/><path d='M20 18a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 3c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z' fill='white'/></svg>"
 
-# CSS for Full-Height Sea Backdrop & Glass UI
+# CSS for Full-Height Sea Backdrop, Cohesive Header, and Single-Capsule Input Bar
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -21,7 +21,7 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* High-Res Coastal Ocean Backdrop - Full Height Coverage */
+    /* Full-Height Coastal Ocean Backdrop */
     [data-testid="stAppViewContainer"] {
         background: 
             linear-gradient(180deg, rgba(235, 248, 250, 0.45) 0%, rgba(255, 255, 255, 0.65) 50%, rgba(204, 251, 241, 0.75) 100%),
@@ -31,9 +31,11 @@ st.markdown("""
         background-attachment: fixed !important;
     }
 
-    /* Make Streamlit's Bottom Container Transparent so Sea Shows 100% */
-    [data-testid="stBottom"], footer, header {
+    /* 100% Transparent Bottom Dock Containers */
+    [data-testid="stBottom"], [data-testid="stBottom"] > div, footer, header {
         background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
     }
 
     /* Top-Left Organic Glass Wave Curve */
@@ -58,7 +60,7 @@ st.markdown("""
         z-index: 1;
     }
 
-    /* Target Header Layout */
+    /* Cohesive Header Layout */
     .header-container {
         margin-top: 10px;
         margin-bottom: 24px;
@@ -66,18 +68,17 @@ st.markdown("""
         z-index: 10;
     }
 
-    .hello-text {
-        font-size: 1.8rem;
-        font-weight: 500;
-        color: #0d9488;
-        margin-bottom: 2px;
-        letter-spacing: -0.3px;
-    }
-
     .name-title-wrap {
         display: flex;
-        align-items: center;
+        align-items: baseline;
         gap: 8px;
+    }
+
+    .meet-prefix {
+        font-size: 2.3rem;
+        font-weight: 500;
+        color: #0d9488;
+        letter-spacing: -0.4px;
     }
 
     .name-text {
@@ -100,7 +101,7 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 1.8px;
         color: #64748b;
-        margin-top: 6px;
+        margin-top: 4px;
     }
 
     /* Glassmorphic Chat Cards */
@@ -143,18 +144,28 @@ st.markdown("""
         color: #475569 !important;
     }
 
-    /* Floating Glass Chat Input Bar */
+    /* Floating Glass Chat Input Capsule (Single Seamless Outer Border) */
     [data-testid="stChatInput"] {
-        background: rgba(255, 255, 255, 0.92) !important;
+        background: rgba(255, 255, 255, 0.85) !important;
         backdrop-filter: blur(20px) !important;
         border-radius: 40px !important;
         border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
         box-shadow: 0 12px 35px rgba(13, 148, 136, 0.15) !important;
-        padding: 4px 12px !important;
+        padding: 4px 8px !important;
         margin-bottom: 8px !important;
     }
 
-    [data-testid="stChatInput"] input {
+    /* Remove inner nested box borders completely */
+    [data-testid="stChatInput"] > div,
+    [data-testid="stChatInput"] div[data-baseweb="input"],
+    [data-testid="stChatInput"] textarea {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    [data-testid="stChatInput"] textarea {
         color: #0f2b3c !important;
         font-size: 0.95rem !important;
     }
@@ -302,19 +313,18 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# Greeting Header Greeting Visitors
+# Cohesive Unified Headline Header
 st.markdown("""
     <div class="header-container">
-        <div class="hello-text">Welcome! Meet</div>
         <div class="name-title-wrap">
-            <h1 class="name-text">Zahra Mumtaz</h1>
+            <h1 class="name-text"><span class="meet-prefix">Meet</span> Zahra Mumtaz</h1>
             <span class="heart-icon">&#9825;</span>
         </div>
         <div class="sub-text">AI DIGITAL CLONE &bull; ALWAYS HERE FOR YOU</div>
     </div>
 """, unsafe_allow_html=True)
 
-# Session State Initialization (Starts empty)
+# Session State Initialization (Starts clean)
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -336,7 +346,7 @@ for msg in st.session_state.messages:
                     st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
                     st.code(snippet, language=None, wrap_lines=True)
 
-# Suggested Questions Cards (ONLY render when conversation is brand new/empty!)
+# Suggested Questions Cards (Disappears once chat starts)
 prompt_to_process = None
 if len(st.session_state.messages) == 0:
     col1, col2, col3 = st.columns(3)
