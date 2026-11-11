@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom Coastal Ocean Palette & Minimalist Typography
+# Custom Coastal Ocean Typography & Wave UI Styling
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -18,50 +18,48 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* Floating Hero Header (Centered, Minimal, Compact) */
-    .hero-container {
-        max-width: 640px;
-        margin: 0 auto 24px auto;
-        text-align: center;
-        padding: 24px 28px;
-        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f766e 100%);
+    /* Organic Fluid Wave Hero Banner */
+    .hero-wave-box {
+        position: relative;
+        background: linear-gradient(135deg, #0b192c 0%, #1e3e62 45%, #0f766e 100%);
         border-radius: 20px;
-        box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.28);
-        border: 1px solid rgba(56, 189, 248, 0.25);
+        padding: 36px 24px 56px 24px;
+        text-align: center;
+        color: #ffffff;
+        box-shadow: 0 14px 35px -10px rgba(11, 25, 44, 0.25);
+        overflow: hidden;
+        margin-bottom: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .hero-title {
-        font-size: 2.1rem;
+    .hero-name {
+        font-size: 2.3rem;
         font-weight: 700;
         letter-spacing: -0.5px;
+        margin: 0 0 4px 0;
         background: linear-gradient(135deg, #ffffff 40%, #7dd3fc 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 4px;
     }
 
     .hero-subtitle {
-        font-size: 0.95rem;
+        font-size: 1rem;
         font-weight: 500;
-        color: #cbd5e1;
-        letter-spacing: 0.2px;
+        color: #94a3b8;
+        letter-spacing: 0.4px;
         margin: 0;
     }
 
-    .hero-pill {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 4px 14px;
-        background: rgba(14, 165, 233, 0.15);
-        color: #38bdf8;
-        border: 1px solid rgba(56, 189, 248, 0.35);
-        border-radius: 20px;
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.4px;
+    .hero-wave-svg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 38px;
+        pointer-events: none;
     }
 
-    /* Sidebar Styling & Fill Expansion */
+    /* Sidebar Styling & Compact Fit */
     [data-testid="stSidebar"] {
         background-color: #f8fafc;
         border-right: 1px solid #e2e8f0;
@@ -73,42 +71,43 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 0.8px;
         color: #0284c7;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
 
     .sidebar-card {
         background: #ffffff;
         border: 1px solid #e2e8f0;
         border-left: 4px solid #0284c7;
-        padding: 16px;
+        padding: 14px 16px;
         border-radius: 12px;
-        margin-bottom: 16px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        margin-top: 10px;
+        margin-bottom: 14px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     }
 
     .sidebar-card h4 {
         color: #0f172a;
-        font-size: 1rem;
+        font-size: 0.98rem;
         font-weight: 700;
-        margin: 0 0 8px 0;
+        margin: 0 0 6px 0;
     }
 
     .sidebar-card p {
         color: #475569;
-        font-size: 0.88rem;
-        line-height: 1.55;
+        font-size: 0.86rem;
+        line-height: 1.5;
         margin-bottom: 8px;
     }
 
     .sidebar-list {
         margin: 0;
-        padding-left: 18px;
+        padding-left: 16px;
         color: #475569;
-        font-size: 0.85rem;
-        line-height: 1.6;
+        font-size: 0.83rem;
+        line-height: 1.55;
     }
 
-    /* Sample Question Pill Buttons */
+    /* Sample Question Chips */
     div.stButton > button[kind="secondary"] {
         background: #ffffff !important;
         color: #0284c7 !important;
@@ -130,39 +129,28 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar Controls & Expanded Knowledge Profile
+# Compact Non-Scrolling Sidebar
 with st.sidebar:
     st.markdown("<p class='sidebar-section-title'>⚡ Retrieval Engine</p>", unsafe_allow_html=True)
     mode = st.radio(
         "Search Mode", 
-        ["BM25 Lexical", "Dense Vector", "Hybrid (RRF)"], 
+        ["BM25 Lexical", "Dense Vector", "Hybrid"], 
         index=2,
-        help="Hybrid merges lexical BM25 search with dense vector embeddings via Reciprocal Rank Fusion (RRF)."
+        help="Hybrid merges lexical BM25 search with dense vector embeddings."
     )
 
     st.markdown("---")
     
-    st.markdown("<p class='sidebar-section-title'>🌊 Digital Identity Profile</p>", unsafe_allow_html=True)
+    st.markdown("<p class='sidebar-section-title'>🌊 Digital Profile</p>", unsafe_allow_html=True)
     st.markdown("""
         <div class="sidebar-card">
             <h4>Zahra Mumtaz</h4>
-            <p>Interactive Retrieval-Augmented Generation (RAG) agent trained on Zahra's verified personal documents, research repositories, and technical stack.</p>
+            <p>Interactive AI clone trained on Zahra's personal documents, research repositories, and technical stack.</p>
             <ul class="sidebar-list">
-                <li><b>Academic Research:</b> Multimodal emotion analysis (Emora) & Guarded AI waste vision (TrashSense).</li>
-                <li><b>Engineering Stack:</b> Python, PyTorch, LangGraph, OpenCV, FastAPI, and Groq SDK.</li>
-                <li><b>Personal Insights:</b> Study methodologies, hackathon projects, and culinary baking recipes.</li>
+                <li><b>Research:</b> Emora & TrashSense</li>
+                <li><b>Stack:</b> Python, PyTorch, LangGraph, OpenCV, FastAPI</li>
+                <li><b>Insights:</b> Workflows & Culinary baking</li>
             </ul>
-        </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-        <div class="sidebar-card" style="border-left-color: #0d9488;">
-            <h4>⚙️ Architecture Specs</h4>
-            <p style="font-size: 0.83rem; margin: 0;">
-                • <b>LLM Backbone:</b> Groq Qwen-2.5 32B<br>
-                • <b>Vector Search:</b> Sentence-Transformers<br>
-                • <b>Fusion Algorithm:</b> Reciprocal Rank
-            </p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -170,12 +158,15 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# Minimalist Centered Hero Header
+# Organic Wave Hero Header
 st.markdown("""
-    <div class="hero-container">
-        <div class="hero-title">Zahra Mumtaz</div>
-        <div class="hero-subtitle">Digital AI Clone</div>
-        <div class="hero-pill">Hybrid RAG &bull; Groq Inference Engine</div>
+    <div class="hero-wave-box">
+        <h1 class="hero-name">Zahra Mumtaz</h1>
+        <p class="hero-subtitle">Digital AI Clone</p>
+        <svg class="hero-wave-svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0 C150,90 350,-40 500,50 C650,140 900,10 1200,40 L1200,120 L0,120 Z" fill="#ffffff" opacity="0.12"></path>
+            <path d="M0,30 C200,100 450,10 700,70 C950,130 1100,20 1200,50 L1200,120 L0,120 Z" fill="#ffffff" opacity="0.2"></path>
+        </svg>
     </div>
 """, unsafe_allow_html=True)
 
@@ -192,24 +183,24 @@ if "messages" not in st.session_state:
 def clean_text_snippet(raw_text):
     return re.sub(r'^#+\s*', '', raw_text.strip())
 
-# Render Chat Feed with Custom Avatars
+# Render Chat Feed
 for msg in st.session_state.messages:
     avatar_icon = "🌊" if msg["role"] == "assistant" else "✨"
     with st.chat_message(msg["role"], avatar=avatar_icon):
         st.markdown(msg["content"])
         
         if msg.get("hits"):
-            with st.expander("🔍 View Hybrid RAG Evidence & Context Chunks", expanded=False):
+            with st.expander("🔍 View RAG Evidence & Context Chunks", expanded=False):
                 for idx, (chunk, score) in enumerate(msg["hits"], 1):
                     source_file = chunk.get("source", "Unknown")
                     chunk_id = chunk.get("chunk_id", "N/A")
                     score_fmt = f"{score:.4f}"
                     snippet = clean_text_snippet(chunk.get("text", ""))
                     
-                    st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `RRF Score: {score_fmt}`")
+                    st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
                     st.code(snippet, language=None, wrap_lines=True)
 
-# Suggested Prompt Cards
+# Quick Sample Prompt Cards
 prompt_to_process = None
 if len(st.session_state.messages) <= 1:
     st.markdown("<p style='font-weight:600; color:#0f2b3c; text-align: center; margin-bottom: 12px;'>Suggested Questions:</p>", unsafe_allow_html=True)
@@ -230,7 +221,6 @@ if user_input:
 
 # Query Execution Logic
 if prompt_to_process:
-    # Normalize mode string for backend chain
     backend_mode = "Hybrid"
     if "BM25" in mode:
         backend_mode = "BM25 only"
@@ -247,14 +237,14 @@ if prompt_to_process:
             st.markdown(reply)
 
             if hits:
-                with st.expander("🔍 View Hybrid RAG Evidence & Context Chunks", expanded=False):
+                with st.expander("🔍 View RAG Evidence & Context Chunks", expanded=False):
                     for idx, (chunk, score) in enumerate(hits, 1):
                         source_file = chunk.get("source", "Unknown")
                         chunk_id = chunk.get("chunk_id", "N/A")
                         score_fmt = f"{score:.4f}"
                         snippet = clean_text_snippet(chunk.get("text", ""))
                         
-                        st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `RRF Score: {score_fmt}`")
+                        st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
                         st.code(snippet, language=None, wrap_lines=True)
 
             st.session_state.messages.append({"role": "assistant", "content": reply, "hits": hits})
