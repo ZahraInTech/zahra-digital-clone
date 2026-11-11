@@ -1,3 +1,4 @@
+import os
 import gradio as gr
 from rag_chain import answer
 
@@ -125,7 +126,7 @@ with gr.Blocks(
                 ["How do you approach software engineering documentation and study workflows?", "Hybrid"],
                 ["What hackathons and awards have you achieved?", "Hybrid"]
             ],
-            inputs=[q,mode],
+            inputs=[q, mode],
             label="Quick Questions to Try"
         )
 
@@ -133,4 +134,5 @@ with gr.Blocks(
         q.submit(ask, [q, mode], [ans, table])
 
 if __name__ == "__main__":
-    demo.launch()
+    port = int(os.environ.get("PORT", 7860))
+    demo.launch(server_name="0.0.0.0", server_port=port)
