@@ -4,10 +4,11 @@ from rag_chain import answer
 st.set_page_config(
     page_title="Zahra Mumtaz — Digital AI Clone", 
     page_icon="🌊", 
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# Injected CSS for Coastal Ocean Aesthetic & Plus Jakarta Sans Font
+# Injected CSS for Coastal Ocean Aesthetic & Modern Typography
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -16,161 +17,215 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     }
 
-    .header-card { 
+    .main-header { 
         text-align: center; 
-        padding: 28px 20px; 
+        padding: 24px 20px; 
         background: linear-gradient(135deg, #0f2b3c 0%, #1a4b6e 100%); 
         color: #ffffff; 
         border-radius: 16px; 
         box-shadow: 0 10px 25px -5px rgba(15, 43, 60, 0.15); 
-        margin-bottom: 20px; 
+        margin-bottom: 22px; 
         border-bottom: 4px solid #0d9488;
     }
 
-    .header-card h1 { 
-        font-size: 2.3rem; 
+    .main-header h1 { 
+        font-size: 2.1rem; 
         font-weight: 700; 
-        margin-bottom: 6px; 
-        letter-spacing: -0.5px; 
+        margin-bottom: 4px; 
         color: #ffffff !important; 
     }
 
-    .header-card p { 
-        font-size: 1.05rem; 
+    .main-header p { 
+        font-size: 1rem; 
         font-weight: 500;
         color: #e2e8f0 !important; 
         margin: 0; 
     }
 
-    .disclaimer-badge { 
-        background: #f0fdfa; 
-        color: #134e4a; 
-        padding: 12px 18px; 
-        border-radius: 12px; 
-        font-size: 0.9rem; 
-        font-weight: 500;
-        text-align: center; 
-        margin-bottom: 22px; 
-        border: 1px solid #ccfbf1; 
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: #f8fafc;
+        border-right: 1px solid #e2e8f0;
     }
 
-    /* Main Teal Action Button (Ask Zahra) */
-    div.stButton > button[kind="primary"] {
-        background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
-        color: #ffffff !important;
-        font-weight: 600 !important;
-        border-radius: 10px !important;
-        border: none !important;
-        box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25) !important;
-        padding: 10px 24px !important;
-        font-size: 1rem !important;
-        transition: all 0.2s ease-in-out !important;
+    .sidebar-card {
+        background: #ffffff;
+        border: 1px solid #ccfbf1;
+        border-left: 4px solid #0d9488;
+        padding: 14px;
+        border-radius: 10px;
+        margin-bottom: 16px;
     }
 
-    div.stButton > button[kind="primary"]:hover {
-        background: linear-gradient(135deg, #0f766e 0%, #115e59 100%) !important;
-        transform: translateY(-1px);
+    .sidebar-card h4 {
+        color: #0f2b3c;
+        margin: 0 0 6px 0;
+        font-size: 0.98rem;
     }
 
-    /* Quick Question Sample Chips */
-    div.stButton > button[kind="secondary"] {
+    .sidebar-card p {
+        color: #334155;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        margin: 0;
+    }
+
+    /* Quick Prompt Sample Buttons */
+    div.stButton > button {
         background: #ffffff !important;
         color: #0f766e !important;
         border: 1.5px solid #0d9488 !important;
         border-radius: 20px !important;
-        font-size: 0.88rem !important;
+        font-size: 0.85rem !important;
         font-weight: 500 !important;
-        padding: 6px 16px !important;
+        padding: 6px 14px !important;
         box-shadow: 0 2px 6px rgba(13, 148, 136, 0.08) !important;
         transition: all 0.2s ease-in-out !important;
     }
 
-    div.stButton > button[kind="secondary"]:hover {
+    div.stButton > button:hover {
         background: #f0fdfa !important;
-        color: #0f766e !important;
         border-color: #0f766e !important;
         transform: translateY(-1px);
+    }
+
+    /* Context Snippet Card Styling */
+    .snippet-box {
+        background-color: #f8fafc;
+        border-left: 4px solid #0d9488;
+        padding: 12px 16px;
+        border-radius: 0 8px 8px 0;
+        font-size: 0.92rem;
+        line-height: 1.5;
+        color: #1e293b;
+    }
+
+    .badge {
+        display: inline-block;
+        background-color: #e0f2fe;
+        color: #0369a1;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-right: 6px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Header & Disclaimer
-st.markdown("""
-    <div class="header-card">
-        <h1>Zahra Mumtaz</h1>
-        <p>Senior Software Engineering Student &bull; AI Enthusiast</p>
-    </div>
-    <div class="disclaimer-badge">
-        <b>Interactive RAG AI Clone</b> — Ask about my academic research (Emora, TrashSense), technical stack, study methodology, or culinary baking!
-    </div>
-""", unsafe_allow_html=True)
-
-if "user_query" not in st.session_state:
-    st.session_state["user_query"] = ""
-
-col1, col2 = st.columns([3, 1])
-
-with col1:
-    question = st.text_input(
-        "Your Question", 
-        value=st.session_state["user_query"],
-        placeholder="e.g., Tell me about your final year project Emora..."
-    )
-
-with col2:
+# Sidebar Controls & Info
+with st.sidebar:
+    st.markdown("### ⚙️ Engine Settings")
     mode = st.radio(
         "Retrieval Mode", 
         ["BM25 only", "Dense only", "Hybrid"], 
-        index=2
+        index=2,
+        help="Hybrid merges lexical BM25 search with dense vector embeddings via Reciprocal Rank Fusion (RRF)."
     )
 
-# Proportioned Action Button
-btn_col1, _ = st.columns([1, 3])
-with btn_col1:
-    submit = st.button("Ask Zahra", type="primary", use_container_width=True)
+    st.markdown("---")
+    st.markdown("""
+        <div class="sidebar-card">
+            <h4>🌊 About Zahra's Clone</h4>
+            <p>This interactive RAG AI clone indexes Zahra's research papers (Emora, TrashSense), technical software stack, study methodology, and culinary baking recipes.</p>
+        </div>
+    """, unsafe_allow_html=True)
 
-# Quick Questions Section
-st.markdown("<h5 style='margin-top: 18px; margin-bottom: 10px; color: #0f2b3c;'>Quick Questions to Try</h5>", unsafe_allow_html=True)
-q_col1, q_col2, q_col3 = st.columns(3)
+    if st.button("🗑️ Clear Conversation", use_container_width=True):
+        st.session_state.messages = []
+        st.rerun()
 
-q1_clicked = q_col1.button("Tell me about Emora", type="secondary", use_container_width=True)
-q2_clicked = q_col2.button("What tools do you use?", type="secondary", use_container_width=True)
-q3_clicked = q_col3.button("Signature baking dish?", type="secondary", use_container_width=True)
+# Main Header
+st.markdown("""
+    <div class="main-header">
+        <h1>Zahra Mumtaz</h1>
+        <p>Senior Software Engineering Student &bull; AI Enthusiast</p>
+    </div>
+""", unsafe_allow_html=True)
 
-# Instant Execution Logic
-active_query = None
+# Session State Initialization
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        {
+            "role": "assistant", 
+            "content": "Hello! I am Zahra's AI Digital Clone. Feel free to ask about my final year research project **Emora**, technical software stack, study workflows, or signature baking recipes!",
+            "hits": []
+        }
+    ]
 
-if submit and question.strip():
-    active_query = question.strip()
-elif submit:
-    st.warning("Please enter a question to start chatting!")
-elif q1_clicked:
-    active_query = "Tell me about your final year project Emora."
-    st.session_state["user_query"] = active_query
-elif q2_clicked:
-    active_query = "What programming languages and framework tools do you use daily?"
-    st.session_state["user_query"] = active_query
-elif q3_clicked:
-    active_query = "What is your signature culinary dish or dessert to bake?"
-    st.session_state["user_query"] = active_query
-
-# Render Answer & Evidence Table
-if active_query:
-    with st.spinner("Thinking..."):
-        reply, hits = answer(active_query, mode)
+# Render Chat Feed
+for msg in st.session_state.messages:
+    avatar_icon = "🌊" if msg["role"] == "assistant" else None
+    with st.chat_message(msg["role"], avatar=avatar_icon):
+        st.write(msg["content"])
         
-        st.markdown("---")
-        st.markdown("### Zahra's Answer")
-        st.write(reply)
-        
-        st.markdown("### Hybrid RAG Evidence & Context Chunks")
-        rows = [
-            {
-                "Source File": c["source"], 
-                "Chunk ID": c["chunk_id"], 
-                "Score": round(score, 4), 
-                "Matched Context Snippet": c["text"][:300] + "..."
-            } 
-            for c, score in hits
-        ]
-        st.dataframe(rows, use_container_width=True)
+        # Render evidence expander inside response bubble if hits exist
+        if msg.get("hits"):
+            with st.expander("📚 View RAG Evidence & Context Chunks", expanded=False):
+                for idx, (chunk, score) in enumerate(msg["hits"], 1):
+                    source_file = chunk.get("source", "Unknown")
+                    chunk_id = chunk.get("chunk_id", "N/A")
+                    score_fmt = f"{score:.4f}"
+                    snippet = chunk.get("text", "").strip()
+                    st.markdown(f"""
+                        <div class="snippet-box" style="margin-bottom: 10px;">
+                            <div>
+                                <span class="badge">Source: {source_file}</span>
+                                <span class="badge">Chunk #{chunk_id}</span>
+                                <span class="badge">RRF Score: {score_fmt}</span>
+                            </div>
+                            <p style="margin-top: 8px; margin-bottom: 0;">{snippet}</p>
+                        </div>
+                    """, unsafe_allow_html=True)
+
+# Suggested Questions (visible when only initial greeting is in feed)
+prompt_to_process = None
+
+if len(st.session_state.messages) <= 1:
+    st.markdown("<p style='font-weight:600; color:#0f2b3c; margin-bottom: 8px;'>Suggested Questions:</p>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns(3)
+    if col1.button("Tell me about Emora", use_container_width=True):
+        prompt_to_process = "Tell me about your final year project Emora."
+    if col2.button("What tools do you use?", use_container_width=True):
+        prompt_to_process = "What programming languages and framework tools do you use daily?"
+    if col3.button("Signature baking dish?", use_container_width=True):
+        prompt_to_process = "What is your signature culinary dish or dessert to bake?"
+
+# Bottom Fixed Chat Input
+user_input = st.chat_input("Ask Zahra anything...")
+if user_input:
+    prompt_to_process = user_input
+
+# Execute Query & Append to Chat Feed
+if prompt_to_process:
+    # Append & display user message
+    st.session_state.messages.append({"role": "user", "content": prompt_to_process, "hits": []})
+    with st.chat_message("user"):
+        st.write(prompt_to_process)
+
+    # Generate assistant response
+    with st.chat_message("assistant", avatar="🌊"):
+        with st.spinner("Thinking..."):
+            reply, hits = answer(prompt_to_process, mode)
+            st.write(reply)
+
+            if hits:
+                with st.expander("📚 View RAG Evidence & Context Chunks", expanded=False):
+                    for idx, (chunk, score) in enumerate(hits, 1):
+                        source_file = chunk.get("source", "Unknown")
+                        chunk_id = chunk.get("chunk_id", "N/A")
+                        score_fmt = f"{score:.4f}"
+                        snippet = chunk.get("text", "").strip()
+                        st.markdown(f"""
+                            <div class="snippet-box" style="margin-bottom: 10px;">
+                                <div>
+                                    <span class="badge">Source: {source_file}</span>
+                                    <span class="badge">Chunk #{chunk_id}</span>
+                                    <span class="badge">RRF Score: {score_fmt}</span>
+                                </div>
+                                <p style="margin-top: 8px; margin-bottom: 0;">{snippet}</p>
+                            </div>
+                        """, unsafe_allow_html=True)
+
+            st.session_state.messages.append({"role": "assistant", "content": reply, "hits": hits})
+            st.rerun()
