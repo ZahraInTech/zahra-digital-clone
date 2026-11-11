@@ -8,7 +8,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom SVG Circle Avatars (Matching the image)
+# Custom SVG Circle Avatars (Matching Coastal Aesthetics)
 AVATAR_ASSISTANT = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%230f766e'/><path d='M10 20c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round'/><path d='M10 25c2.5 0 3.5-2 6-2s3.5 2 6 2 3.5-2 6-2' stroke='white' stroke-width='1.5' stroke-opacity='0.6' fill='none' stroke-linecap='round'/></svg>"
 AVATAR_USER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%232dd4bf'/><path d='M20 18a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 3c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z' fill='white'/></svg>"
 
@@ -116,7 +116,7 @@ st.markdown("""
         border-radius: 50% !important;
     }
 
-    /* RAG Evidence Expander Pill Button (Matching ↓ Button in Image) */
+    /* RAG Evidence Expander Pill Button */
     [data-testid="stExpander"] {
         border: none !important;
         background: transparent !important;
@@ -254,6 +254,20 @@ st.markdown("""
     </svg>
 """, unsafe_allow_html=True)
 
+# Helper Functions
+def clean_text_snippet(raw_text):
+    return re.sub(r'^#+\s*', '', str(raw_text).strip())
+
+def parse_hit_item(item):
+    """Safely extracts (chunk_dict, score) whether item is a tuple, dict, or raw hit."""
+    if isinstance(item, tuple) and len(item) > 0:
+        chunk_dict = item[0] if isinstance(item[0], dict) else {}
+        score = item[1] if len(item) > 1 and isinstance(item[1], (int, float)) else 0.0
+        return chunk_dict, score
+    elif isinstance(item, dict):
+        return item, 0.0
+    return {}, 0.0
+
 # Compact Sidebar
 with st.sidebar:
     st.markdown("<p class='sidebar-section-title'>Retrieval Engine</p>", unsafe_allow_html=True)
@@ -283,7 +297,7 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# Header Matching Mockup Image
+# Header Layout
 st.markdown("""
     <div class="header-container">
         <div class="hello-text">Hello,</div>
@@ -307,13 +321,10 @@ if "messages" not in st.session_state:
             "role": "assistant",
             "content": "I'm not a big movie watcher, but I do love wholesome animated films. My ultimate comfort movie is *Turbo*, which I grew up watching with my siblings, so it always feels like home. I also enjoy classic Disney/Pixar films like the *Toy Story* series, *Tangled*, and *Frozen*.\n\nI am also a huge fan of Studio Ghibli for their incredible storytelling and visual magic. My top favorites from them are *When Marnie Was There*, *The Wind Rises*, and *Howl's Moving Castle*.",
             "hits": [
-                {"source": "07_faqs.md", "chunk_id": "12", "text": "Q12: Do you watch any movies? A: I'm not a big movie watcher, but I love wholesome animated films..."}
+                ({"source": "07_faqs.md", "chunk_id": "12", "text": "Q12: Do you watch any movies? A: I'm not a big movie watcher, but I love wholesome animated films..."}, 0.032)
             ]
         }
     ]
-
-def clean_text_snippet(raw_text):
-    return re.sub(r'^#+\s*', '', raw_text.strip())
 
 # Render Chat Feed
 for msg in st.session_state.messages:
@@ -323,12 +334,14 @@ for msg in st.session_state.messages:
         
         if msg.get("hits"):
             with st.expander("&darr; View RAG Evidence & Context Chunks", expanded=False):
-                for idx, chunk in enumerate(msg["hits"], 1):
+                for idx, raw_item in enumerate(msg["hits"], 1):
+                    chunk, score = parse_hit_item(raw_item)
                     source_file = chunk.get("source", "Unknown")
                     chunk_id = chunk.get("chunk_id", "N/A")
                     snippet = clean_text_snippet(chunk.get("text", ""))
+                    score_fmt = f"{score:.4f}" if score else "N/A"
                     
-                    st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}`")
+                    st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
                     st.code(snippet, language=None, wrap_lines=True)
 
 # Quick Questions Cards
@@ -364,16 +377,18 @@ if prompt_to_process:
             reply, hits_data = answer(prompt_to_process, backend_mode)
             st.markdown(reply)
 
-            hits_list = [h[0] if isinstance(h, tuple) else h for h in hits_data] if hits_data else []
+            hits_list = hits_data if hits_data else []
 
             if hits_list:
                 with st.expander("&darr; View RAG Evidence & Context Chunks", expanded=False):
-                    for idx, chunk in enumerate(hits_list, 1):
+                    for idx, raw_item in enumerate(hits_list, 1):
+                        chunk, score = parse_hit_item(raw_item)
                         source_file = chunk.get("source", "Unknown")
                         chunk_id = chunk.get("chunk_id", "N/A")
                         snippet = clean_text_snippet(chunk.get("text", ""))
+                        score_fmt = f"{score:.4f}" if score else "N/A"
                         
-                        st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}`")
+                        st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
                         st.code(snippet, language=None, wrap_lines=True)
 
             st.session_state.messages.append({"role": "assistant", "content": reply, "hits": hits_list})
