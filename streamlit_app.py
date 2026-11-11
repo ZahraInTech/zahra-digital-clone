@@ -54,19 +54,41 @@ st.markdown("""
         border: 1px solid #ccfbf1; 
     }
 
-    /* Main Teal Action Button Styling */
-    div.stButton > button[kind="primary"], div.stButton > button {
+    /* Main Teal Action Button (Ask Zahra) */
+    div.stButton > button[kind="primary"] {
         background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
         color: #ffffff !important;
         font-weight: 600 !important;
         border-radius: 10px !important;
         border: none !important;
         box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25) !important;
+        padding: 10px 24px !important;
+        font-size: 1rem !important;
         transition: all 0.2s ease-in-out !important;
     }
 
-    div.stButton > button:hover {
+    div.stButton > button[kind="primary"]:hover {
         background: linear-gradient(135deg, #0f766e 0%, #115e59 100%) !important;
+        transform: translateY(-1px);
+    }
+
+    /* Quick Question Sample Chips */
+    div.stButton > button[kind="secondary"] {
+        background: #ffffff !important;
+        color: #0f766e !important;
+        border: 1.5px solid #0d9488 !important;
+        border-radius: 20px !important;
+        font-size: 0.88rem !important;
+        font-weight: 500 !important;
+        padding: 6px 16px !important;
+        box-shadow: 0 2px 6px rgba(13, 148, 136, 0.08) !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+
+    div.stButton > button[kind="secondary"]:hover {
+        background: #f0fdfa !important;
+        color: #0f766e !important;
+        border-color: #0f766e !important;
         transform: translateY(-1px);
     }
     </style>
@@ -102,28 +124,42 @@ with col2:
         index=2
     )
 
-submit = st.button("Ask Zahra", use_container_width=True)
+# Proportioned Action Button
+btn_col1, _ = st.columns([1, 3])
+with btn_col1:
+    submit = st.button("Ask Zahra", type="primary", use_container_width=True)
 
-# Quick Questions
-st.markdown("##### Quick Questions to Try")
+# Quick Questions Section
+st.markdown("<h5 style='margin-top: 18px; margin-bottom: 10px; color: #0f2b3c;'>Quick Questions to Try</h5>", unsafe_allow_html=True)
 q_col1, q_col2, q_col3 = st.columns(3)
 
-if q_col1.button("Tell me about Emora"):
-    st.session_state["user_query"] = "Tell me about your final year project Emora."
-    st.rerun()
+q1_clicked = q_col1.button("Tell me about Emora", type="secondary", use_container_width=True)
+q2_clicked = q_col2.button("What tools do you use?", type="secondary", use_container_width=True)
+q3_clicked = q_col3.button("Signature baking dish?", type="secondary", use_container_width=True)
 
-if q_col2.button("What tools do you use?"):
-    st.session_state["user_query"] = "What programming languages and framework tools do you use daily?"
-    st.rerun()
+# Instant Execution Logic
+active_query = None
 
-if q_col3.button("Signature baking dish?"):
-    st.session_state["user_query"] = "What is your signature culinary dish or dessert to bake?"
-    st.rerun()
-
-# Execution
 if submit and question.strip():
+    active_query = question.strip()
+elif submit:
+    st.warning("Please enter a question to start chatting!")
+elif q1_clicked:
+    active_query = "Tell me about your final year project Emora."
+    st.session_state["user_query"] = active_query
+elif q2_clicked:
+    active_query = "What programming languages and framework tools do you use daily?"
+    st.session_state["user_query"] = active_query
+elif q3_clicked:
+    active_query = "What is your signature culinary dish or dessert to bake?"
+    st.session_state["user_query"] = active_query
+
+# Render Answer & Evidence Table
+if active_query:
     with st.spinner("Thinking..."):
-        reply, hits = answer(question, mode)
+        reply, hits = answer(active_query, mode)
+        
+        st.markdown("---")
         st.markdown("### Zahra's Answer")
         st.write(reply)
         
@@ -138,5 +174,3 @@ if submit and question.strip():
             for c, score in hits
         ]
         st.dataframe(rows, use_container_width=True)
-elif submit:
-    st.warning("Please enter a question to start chatting!")
