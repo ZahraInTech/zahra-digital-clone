@@ -4,3 +4,4 @@ rank-bm25
 numpy==2.4.6
 openai==3.19.2
 huggingface-hub
+streamlit
