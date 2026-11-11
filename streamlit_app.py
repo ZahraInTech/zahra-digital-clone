@@ -9,85 +9,122 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom Coastal Ocean Typography & Wave UI Styling
+# Pastel Coastal Aesthetic + PowerPoint-Style Morph & Wave Animation CSS
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
     html, body, p, h1, h2, h3, h4, h5, h6, span, label, input, textarea, button {
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* Organic Fluid Wave Hero Banner */
-    .hero-wave-box {
-        position: relative;
-        background: linear-gradient(135deg, #0b192c 0%, #1e3e62 45%, #0f766e 100%);
-        border-radius: 20px;
-        padding: 36px 24px 56px 24px;
-        text-align: center;
-        color: #ffffff;
-        box-shadow: 0 14px 35px -10px rgba(11, 25, 44, 0.25);
+    /* Fixed Top-Right Triangular Pastel Wave Graphic */
+    .top-right-wave-container {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 340px;
+        height: 340px;
+        pointer-events: none;
+        z-index: 99999;
         overflow: hidden;
-        margin-bottom: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .hero-name {
-        font-size: 2.3rem;
-        font-weight: 700;
-        letter-spacing: -0.5px;
-        margin: 0 0 4px 0;
-        background: linear-gradient(135deg, #ffffff 40%, #7dd3fc 100%);
+    .pastel-wave-svg {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0px 10px 20px rgba(13, 148, 136, 0.15));
+        animation: waveMorph 8s ease-in-out infinite alternate;
+    }
+
+    /* Keyframe Morph Effect for Geometric Side Wave */
+    @keyframes waveMorph {
+        0% {
+            transform: translateY(0px) rotate(0deg) scale(1);
+        }
+        50% {
+            transform: translateY(-8px) rotate(1.5deg) scale(1.02);
+        }
+        100% {
+            transform: translateY(4px) rotate(-1deg) scale(0.99);
+        }
+    }
+
+    /* Sleek Floating Header Title */
+    .brand-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 10px;
+        margin-bottom: 18px;
+    }
+
+    .brand-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.6px;
+        background: linear-gradient(135deg, #0f172a 0%, #0d9488 50%, #3b82f6 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-    }
-
-    .hero-subtitle {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #94a3b8;
-        letter-spacing: 0.4px;
         margin: 0;
     }
 
-    .hero-wave-svg {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 38px;
-        pointer-events: none;
+    .brand-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 14px;
+        background: linear-gradient(135deg, #e0f2fe 0%, #ccfbf1 100%);
+        color: #0f766e;
+        border: 1.5px solid #99f6e4;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        box-shadow: 0 4px 14px rgba(153, 246, 228, 0.4);
+        animation: floatPill 3.5s ease-in-out infinite alternate;
     }
 
-    /* Sidebar Styling & Compact Fit */
+    @keyframes floatPill {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-4px); }
+    }
+
+    /* Sidebar Glassmorphic Styling */
     [data-testid="stSidebar"] {
-        background-color: #f8fafc;
-        border-right: 1px solid #e2e8f0;
+        background: linear-gradient(180deg, #f8fafc 0%, #f0fdfa 100%);
+        border-right: 1px solid #ccfbf1;
     }
 
     .sidebar-section-title {
-        font-size: 0.8rem;
-        font-weight: 700;
+        font-size: 0.78rem;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
-        color: #0284c7;
-        margin-bottom: 6px;
+        letter-spacing: 0.9px;
+        color: #0f766e;
+        margin-bottom: 8px;
     }
 
     .sidebar-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-left: 4px solid #0284c7;
-        padding: 14px 16px;
-        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border: 1.5px solid #ccfbf1;
+        border-left: 4px solid #0d9488;
+        padding: 16px;
+        border-radius: 16px;
         margin-top: 10px;
-        margin-bottom: 14px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+        margin-bottom: 16px;
+        box-shadow: 0 4px 16px rgba(13, 148, 136, 0.06);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sidebar-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(13, 148, 136, 0.12);
+        border-left-color: #3b82f6;
     }
 
     .sidebar-card h4 {
         color: #0f172a;
-        font-size: 0.98rem;
+        font-size: 1.02rem;
         font-weight: 700;
         margin: 0 0 6px 0;
     }
@@ -102,34 +139,55 @@ st.markdown("""
     .sidebar-list {
         margin: 0;
         padding-left: 16px;
-        color: #475569;
-        font-size: 0.83rem;
-        line-height: 1.55;
+        color: #334155;
+        font-size: 0.84rem;
+        line-height: 1.6;
     }
 
-    /* Sample Question Chips */
+    /* Interactive "Morphing" Quick Prompt Chips */
     div.stButton > button[kind="secondary"] {
         background: #ffffff !important;
-        color: #0284c7 !important;
-        border: 1.5px solid #0284c7 !important;
-        border-radius: 20px !important;
-        font-size: 0.85rem !important;
-        font-weight: 500 !important;
-        padding: 8px 16px !important;
-        box-shadow: 0 2px 6px rgba(2, 132, 199, 0.08) !important;
-        transition: all 0.2s ease-in-out !important;
+        color: #0f766e !important;
+        border: 1.5px solid #99f6e4 !important;
+        border-radius: 16px 8px 16px 8px !important;
+        font-size: 0.86rem !important;
+        font-weight: 600 !important;
+        padding: 10px 18px !important;
+        box-shadow: 0 4px 14px rgba(153, 246, 228, 0.2) !important;
+        transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
     }
 
     div.stButton > button[kind="secondary"]:hover {
-        background: #f0f9ff !important;
-        border-color: #0369a1 !important;
-        color: #0369a1 !important;
-        transform: translateY(-1px);
+        background: linear-gradient(135deg, #e0f2fe 0%, #ccfbf1 100%) !important;
+        border-color: #3b82f6 !important;
+        color: #1e3a8a !important;
+        border-radius: 8px 18px 8px 18px !important; /* Shape Morphing on Hover */
+        transform: translateY(-3px) scale(1.02) !important;
+        box-shadow: 0 8px 22px rgba(59, 130, 246, 0.25) !important;
     }
     </style>
+
+    <!-- Top-Right Geometric Triangular Pastel Wave overlay -->
+    <div class="top-right-wave-container">
+        <svg class="pastel-wave-svg" viewBox="0 0 350 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="pastelGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#99f6e4" stop-opacity="0.85"/>
+                    <stop offset="50%" stop-color="#bae6fd" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#ddd6fe" stop-opacity="0.8"/>
+                </linearGradient>
+                <linearGradient id="pastelGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#a7f3d0" stop-opacity="0.4"/>
+                </linearGradient>
+            </defs>
+            <path d="M350,0 L120,0 C170,90 220,130 190,210 C160,290 280,310 350,350 Z" fill="url(#pastelGrad2)" />
+            <path d="M350,0 L160,0 C220,70 260,110 230,170 C200,230 300,260 350,300 Z" fill="url(#pastelGrad1)" />
+        </svg>
+    </div>
 """, unsafe_allow_html=True)
 
-# Compact Non-Scrolling Sidebar
+# Compact Glassmorphic Sidebar
 with st.sidebar:
     st.markdown("<p class='sidebar-section-title'>⚡ Retrieval Engine</p>", unsafe_allow_html=True)
     mode = st.radio(
@@ -158,15 +216,11 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# Organic Wave Hero Header
+# Minimal Floating Title Header
 st.markdown("""
-    <div class="hero-wave-box">
-        <h1 class="hero-name">Zahra Mumtaz</h1>
-        <p class="hero-subtitle">Digital AI Clone</p>
-        <svg class="hero-wave-svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0 C150,90 350,-40 500,50 C650,140 900,10 1200,40 L1200,120 L0,120 Z" fill="#ffffff" opacity="0.12"></path>
-            <path d="M0,30 C200,100 450,10 700,70 C950,130 1100,20 1200,50 L1200,120 L0,120 Z" fill="#ffffff" opacity="0.2"></path>
-        </svg>
+    <div class="brand-title-wrap">
+        <h1 class="brand-title">Zahra Mumtaz</h1>
+        <span class="brand-pill">✨ Digital AI Clone</span>
     </div>
 """, unsafe_allow_html=True)
 
@@ -200,19 +254,17 @@ for msg in st.session_state.messages:
                     st.markdown(f"**Match #{idx}** | `Source: {source_file}` | `Chunk: #{chunk_id}` | `Score: {score_fmt}`")
                     st.code(snippet, language=None, wrap_lines=True)
 
-# Quick Sample Prompt Cards
+# Morphing Interactive Sample Prompt Cards
 prompt_to_process = None
 if len(st.session_state.messages) <= 1:
-    st.markdown("<p style='font-weight:600; color:#0f2b3c; text-align: center; margin-bottom: 12px;'>Suggested Questions:</p>", unsafe_allow_html=True)
-    _, center_col, _ = st.columns([0.1, 0.8, 0.1])
-    with center_col:
-        col1, col2, col3 = st.columns(3)
-        if col1.button("Tell me about Emora", type="secondary", use_container_width=True):
-            prompt_to_process = "Tell me about your final year project Emora."
-        if col2.button("What tools do you use?", type="secondary", use_container_width=True):
-            prompt_to_process = "What programming languages and framework tools do you use daily?"
-        if col3.button("Signature baking dish?", type="secondary", use_container_width=True):
-            prompt_to_process = "What is your signature culinary dish or dessert to bake?"
+    st.markdown("<p style='font-weight:600; color:#0f766e; margin-bottom: 12px;'>Suggested Questions:</p>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns(3)
+    if col1.button("Tell me about Emora 🌸", type="secondary", use_container_width=True):
+        prompt_to_process = "Tell me about your final year project Emora."
+    if col2.button("What tools do you use? ⚡", type="secondary", use_container_width=True):
+        prompt_to_process = "What programming languages and framework tools do you use daily?"
+    if col3.button("Signature baking dish? 🍰", type="secondary", use_container_width=True):
+        prompt_to_process = "What is your signature culinary dish or dessert to bake?"
 
 # Fixed Bottom Input Bar
 user_input = st.chat_input("Ask Zahra anything...")
