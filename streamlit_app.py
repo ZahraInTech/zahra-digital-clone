@@ -104,6 +104,20 @@ st.markdown("""
         margin-top: 4px;
     }
 
+    .disclaimer-banner {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 5px 14px;
+        background: rgba(255, 255, 255, 0.78);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(13, 148, 136, 0.28);
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #0f766e;
+        box-shadow: 0 2px 10px rgba(13, 148, 136, 0.06);
+    }
+
     /* Glassmorphic Chat Cards */
     [data-testid="stChatMessage"] {
         background: rgba(255, 255, 255, 0.88) !important;
@@ -301,7 +315,7 @@ with st.sidebar:
     st.markdown("""
         <div class="sidebar-card">
             <h4>Zahra Mumtaz</h4>
-            <p>Interactive AI clone trained on Zahra's personal documents, research repositories, and technical stack.</p>
+            <p><b>This is an AI clone, not the real person.</b> Trained on Zahra's personal documents, research repositories, and technical stack.</p>
             <ul class="sidebar-list">
                 <li><b>Research:</b> Emora & TrashSense</li>
                 <li><b>Stack:</b> Python, PyTorch, LangGraph, OpenCV, FastAPI</li>
@@ -314,7 +328,7 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# Cohesive Unified Headline Header
+# Cohesive Unified Headline Header with Required AI Clone Disclaimer Banner
 st.markdown("""
     <div class="header-container">
         <div class="name-title-wrap">
@@ -322,6 +336,7 @@ st.markdown("""
             <span class="heart-icon">&#9825;</span>
         </div>
         <div class="sub-text">AI DIGITAL CLONE</div>
+        <div class="disclaimer-banner">This is an AI clone, not the real person.</div>
     </div>
 """, unsafe_allow_html=True)
 
