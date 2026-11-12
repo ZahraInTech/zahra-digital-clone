@@ -321,7 +321,7 @@ st.markdown("""
             <h1 class="name-text"><span class="meet-prefix">Meet</span> Zahra Mumtaz</h1>
             <span class="heart-icon">&#9825;</span>
         </div>
-        <div class="sub-text">AI DIGITAL CLONE &bull; ALWAYS HERE FOR YOU</div>
+        <div class="sub-text">AI DIGITAL CLONE</div>
     </div>
 """, unsafe_allow_html=True)
 
